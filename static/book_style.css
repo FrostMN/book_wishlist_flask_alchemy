@@ -1,0 +1,26 @@
+
+li.menu {
+  display: inline;
+  padding: 10px;
+  list-style-type: none;   /* remove bullet point */
+}
+
+ul.navigation {
+  border: 1px black solid;
+  margin:auto;
+  background-color: PowderBlue;
+
+}
+
+body {
+  font-family: 'Lora', serif;   /* A Google font */
+}
+
+.add_book_form_label {
+  width: 100px;
+}
+
+/*Buttons and things with the button class */
+.button, button {
+  background-color: orange;
+}

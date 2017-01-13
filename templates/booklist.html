@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h1>Books</h1>
+
+  {% for book in booklist %}
+
+    <div> <P> <span class='title'>{{ book.title }}<span> by <span class='author'>{{ book.author}}</span>.
+      {% if book.read %}
+      You've read this book.
+      {% else %}
+      Unread.
+      <form method='POST' action={{ url_for('book_read', read='TRUE') }}>
+        <input type='submit' value='Mark as read?'></button>
+        <input type='hidden' name='book_id' value={{ book.book_id }}>
+        <input type='hidden' name='read' value='True'>
+      </form>
+
+      {% endif %}
+    </div>
+
+  {% endfor %}
+
+  <P> {{ booklist|length }} book(s)</P>
+
+{% endblock %}

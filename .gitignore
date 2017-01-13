@@ -1,0 +1,4 @@
+*.pyc
+__pycache__
+wishlist.db
+venv

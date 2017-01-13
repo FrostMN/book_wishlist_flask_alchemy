@@ -1,0 +1,30 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Book Wishlist</title>
+
+  <link rel='stylesheet' href={{ url_for('static', filename='book_style.css') }}>
+
+  {% block head %}    <!-- For adding more info to the header e.g. title, stylesheet -->
+  {% endblock %}
+
+  <!-- Use Google fonts for nice text  -->
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- A block that the child template will fill in -->
+<ul class='navigation'>
+<li class='menu'><a href='{{ url_for('show_books', read='ALL') }}'>All books</a></li>
+<li class='menu'><a href='{{ url_for('show_books', read='UNREAD') }}'>Wishlist books</a></li>
+<li class='menu'><a href='{{ url_for('show_books', read='READ') }}'>Read books</a></li>
+<li class='menu'><a href='{{ url_for('add_book') }}'>Add a book</a></li>
+</ul>
+
+{% block content %}
+{% endblock %}
+</body>
+</html>

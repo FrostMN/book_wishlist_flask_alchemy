@@ -1,0 +1,23 @@
+<!--  Information about one book. -->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Book data here -->
+
+{% if book %}
+
+<P>id: {{ book.id }}
+<P>Author: {{ book.author }}</p>
+  <p>Title: {{ book.title }}</p>
+  <p>
+  {% if book.read %}
+    Read: yes
+  {% else %}
+    Read: no
+  {% endif %}
+<p>
+{% endif %}
+
+{% endblock %}
