@@ -14,13 +14,23 @@ ul.navigation {
 
 body {
   font-family: 'Lora', serif;   /* A Google font */
+  background: Azure;
 }
 
 .add_book_form_label {
   width: 100px;
 }
 
-/*Buttons and things with the button class */
+/* Regular buttons and things with the button class */
 .button, button {
   background-color: orange;
+}
+
+.danger {
+  background-color: OrangeRed;
+}
+
+
+.flashed_message {
+  text-emphasis: italic;
 }

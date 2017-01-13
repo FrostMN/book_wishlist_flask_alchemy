@@ -8,7 +8,7 @@
 
 {% if book %}
 
-<P>id: {{ book.id }}
+<P>id: {{ book.book_id }}
 <P>Author: {{ book.author }}</p>
   <p>Title: {{ book.title }}</p>
   <p>
@@ -18,6 +18,11 @@
     Read: no
   {% endif %}
 <p>
+
 {% endif %}
+
+{% for message in get_flashed_messages() %}
+<p class='flashed_message'>{{ message}}<p>
+  {% endfor %}
 
 {% endblock %}

@@ -2,26 +2,35 @@
 
 {% block content %}
 
-  <h1>Books</h1>
+  <h1>{{ title }}</h1>
 
   {% for book in booklist %}
 
-    <div> <P> <span class='title'>{{ book.title }}<span> by <span class='author'>{{ book.author}}</span>.
+    <div> <P> <span class='title' id={{ book.book_id }} >{{ book.title }}<span> by <span class='author'>{{ book.author}}</span>.
       {% if book.read %}
       You've read this book.
       {% else %}
       Unread.
       <form method='POST' action={{ url_for('book_read', read='TRUE') }}>
-        <input type='submit' value='Mark as read?'></button>
+        <input type='submit' value='Mark as read?' class='button'></input>
         <input type='hidden' name='book_id' value={{ book.book_id }}>
         <input type='hidden' name='read' value='True'>
       </form>
 
+
       {% endif %}
+
+
+      <button class='delete_book' class='danger' value={{ book.book_id }}>Delete</button>
+
+
     </div>
 
   {% endfor %}
 
   <P> {{ booklist|length }} book(s)</P>
+
+  <script src='../static/delete_book.js'></script>
+
 
 {% endblock %}
