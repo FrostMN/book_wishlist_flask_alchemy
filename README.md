@@ -1,3 +1,5 @@
+###Basic Flask and SQLAlchemy app. Book reading wishlist. 
+
 Setup
 
 Set up virtual environment, Mac
@@ -20,9 +22,7 @@ Install requirements
 pip install -r requirements.txt
 ```
 
-Set up database
-
-Start Python console
+Set up database - start Python console
 
 ```
 python
