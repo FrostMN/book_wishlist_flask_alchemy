@@ -17,7 +17,7 @@ venv/bin/activate
 Install requirements
 
 ```
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 Set up database

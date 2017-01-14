@@ -3,6 +3,7 @@ li.menu {
   display: inline;
   padding: 10px;
   list-style-type: none;   /* remove bullet point */
+  font-size: 14px;
 }
 
 ul.navigation {
@@ -17,20 +18,34 @@ body {
   background: Azure;
 }
 
+
 .add_book_form_label {
   width: 100px;
+  display: inline-block;
 }
 
 /* Regular buttons and things with the button class */
-.button, button {
+.read_button {
   background-color: orange;
 }
 
-.danger {
-  background-color: OrangeRed;
+.add_button {
+  background-color: DarkSeaGreen;
 }
 
 
+.danger {
+  background-color: red;
+}
+
 .flashed_message {
-  text-emphasis: italic;
+  font-style:italic;
+}
+
+.read_form {
+  display : inline;
+}
+
+.delete_book {
+  display: inline
 }

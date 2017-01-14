@@ -4,25 +4,27 @@
 
 {% block content %}
 
-<!-- Book data here -->
+  <!-- Book data here -->
 
-{% if book %}
+  {% if book %}
 
-<P>id: {{ book.book_id }}
-<P>Author: {{ book.author }}</p>
-  <p>Title: {{ book.title }}</p>
-  <p>
-  {% if book.read %}
-    Read: yes
-  {% else %}
-    Read: no
+    <h2>{{ book.title }} by {{ book.author}}</h2>
+
+    <P>id: {{ book.book_id }}</p>
+
+    <p>
+      {% if book.read %}
+        Read: yes
+      {% else %}
+        Read: no
+      {% endif %}
+    </p>
+
   {% endif %}
-<p>
 
-{% endif %}
-
-{% for message in get_flashed_messages() %}
-<p class='flashed_message'>{{ message}}<p>
+    <!-- display any temporary flash messages  -->
+  {% for message in get_flashed_messages() %}
+    <p class='flashed_message'>{{ message}}</p>
   {% endfor %}
 
 {% endblock %}

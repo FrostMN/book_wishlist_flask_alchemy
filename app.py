@@ -1,15 +1,13 @@
 from flask import Flask
-from flask import url_for, render_template, request, redirect, flash
+from flask import url_for, render_template, request, redirect, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///wishlist.db'   # /// relative path to this app.    # //// absolute path to somewhere on file system
+app.config.from_object('config')
+
 db = SQLAlchemy(app)
-
-app.logger.setLevel(10)   ## Todo turn on logging in config file
-app.secret_key = 'Change to something random.'# move to config file
-
 from models import *
+
 
 '''Application home page. Redirects to list of unread books.'''
 @app.route('/')
@@ -17,13 +15,25 @@ def home_page():
     return redirect(url_for('show_books', read='UNREAD'))
 
 
+
 @app.route('/add', methods=['POST', 'GET'])
 def add_book():
 
     if request.method == 'POST':
+        # A POST request to this URL, to create a book
+
+        # Validate that both of the necessary parameters are provided.
+        if 'author' not in request.form or 'title' not in request.form:
+            app.logger.error('Attempt to create book without both author and title')
+            abort(500)
 
         author = request.form['author']
         title = request.form['title']
+
+        if not author or not title:
+            app.logger.error('Attempt to create book without both author and title')
+            flash('Please enter both title and author')
+            return redirect(url_for('add_book'))
 
         # Checkboxes don't include any data in the post request if not checked.
         # If there's no data for the 'read' parameter, assume checkbox was not checked.
@@ -33,7 +43,6 @@ def add_book():
             read = False
 
         book = Book(author, title, read)
-
         db.session.add(book)
         db.session.commit()
 
@@ -45,6 +54,7 @@ def add_book():
 
 
 
+'''Get book info for an ID, or 404 if book id not found'''
 @app.route('/book/<int:book_id>')
 def book_info(book_id):
     #show data about one book
@@ -53,12 +63,11 @@ def book_info(book_id):
 
 
 
+'''Change the read value for a book. The id and read = true or false in the POST parameters '''
 @app.route('/book/read', methods=['POST'])
 def book_read():
 
     #Was book read or not? this could be used to make read book as unread.
-
-    app.logger.debug(request.form)
     read = request.form['read']
     book_id = request.form['book_id']
 
@@ -76,15 +85,16 @@ def book_read():
     return redirect(url_for('book_info', book_id=book_id))
 
 
+
+'''Fetch all books, or fetch books based on read or unread.'''
 @app.route('/booklist/<read>')
 def show_books(read):
 
-    if read == 'READ':
-        #show read books
+    if read == 'read':
         title = 'Books you\'ve read'
         booklist = Book.query.filter_by(read=True).all()
 
-    elif read == 'UNREAD':
+    elif read == 'unread':
         title = 'Books to read'
         booklist = Book.query.filter_by(read=False).all()
 
@@ -95,17 +105,21 @@ def show_books(read):
     return render_template('booklist.html', title=title, booklist=booklist)
 
 
+
+''' Delete a book by ID '''
 @app.route('/book/<int:book_id>', methods=['DELETE'])
+
 def delete_book(book_id):
     book = Book.query.get(book_id)
     if book:
         db.session.delete(book)
         db.session.commit()
-        return '', 204  # Empty response and no content
+        return 'deleted', 200  # Text response and 200 status code = OK.
 
-    else:
-        app.logger.error('Attempting to delete book id %s but it was not found in db. ' % book_id)
-        abort(500) # book not found.
+    else :
+        app.logger.warning('Attempting to delete book id %s but it was not found in db. ' % book_id)
+        return 'not_found', 200  # Text response. There was nothing to delete, so the thing the user wants gone is gone. So, not an error. 200 succes code
+
 
 
 

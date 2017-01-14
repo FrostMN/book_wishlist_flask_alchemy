@@ -1,17 +1,2 @@
-fix indentation in html files
-create config file for secret key, db uri etc.
-fix adding book
-test flash message css
-css for buttons?
-
-clean up css file
-
-columns for new book form
-
-check marked as read is working
 verify instructions for install db
-verify pc instructions; set USER env variables?
-
-fix static include of javascript should be a block tag in base.
-
-why ajax callback running twice? 
+verify pc instructions; possible to set USER env variables on campus lab machines?
