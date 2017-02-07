@@ -1,4 +1,4 @@
-###Basic Flask and SQLAlchemy app. Book reading wishlist. 
+###Basic Flask and SQLAlchemy app. Book reading wishlist.
 
 Setup
 
@@ -57,3 +57,14 @@ flask run
 ```
 
 App should be at 127.0.0.1:5000
+
+
+Run tests by typing
+
+```
+python -m unittests tests.test_book_wishlist
+```
+or
+```
+python -m unittests tests/test_book_wishlist.py
+```
