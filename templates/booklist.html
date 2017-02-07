@@ -4,6 +4,8 @@
 
 <h1>{{ title }}</h1>
 
+{% if booklist %}
+
 {% for book in booklist %}
 
 <div id="book_{{ book.book_id }}">
@@ -40,8 +42,15 @@
 <!-- Number of books in the list  -->
 <P> <span id="book_count">{{ booklist|length }}</span> book(s)</P>
 
-{% endblock %}
 
+{% else %}
+
+<P>No books.</p>
+
+{% endif %}
+
+
+{% endblock %}
 
 <!-- Provide script to base.html. Used to delete books.  -->
 {% block scripts %}

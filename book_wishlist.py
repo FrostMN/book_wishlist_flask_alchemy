@@ -3,11 +3,23 @@ from flask import url_for, render_template, request, redirect, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config.from_object('config')
+
+
+DEBUG = True     # Turns logging features on for code. Separate to the in-browser debugger and code-relaucher.
+SQLALCHEMY_DATABASE_URI = 'sqlite:///wishlist.db'   # /// relative path to this app.    # //// absolute path to somewhere on file system
+SECRET_KEY = 'super random secret value'
+
+
+app.config.from_object(__name__)
 
 db = SQLAlchemy(app)
+
+def init_db():
+    db.create_all()
+
 from models import *
 
+init_db()
 
 '''Application home page. Redirects to list of unread books.'''
 @app.route('/')
@@ -63,24 +75,26 @@ def book_info(book_id):
 
 
 
-'''Change the read value for a book. The id and read = true or false in the POST parameters '''
+'''Change the read value for a book. The id and read = True or False in the POST parameters '''
 @app.route('/book/read', methods=['POST'])
 def book_read():
 
     #Was book read or not? this could be used to make read book as unread.
-    read = request.form['read']
+    read_str = request.form['read']  # Form data is strings
+    read = read_str == 'True'
     book_id = request.form['book_id']
 
     book = Book.query.get(book_id)   # get() function for fetching by primary key.
 
     if book:
         book.read = read
-        db.session.add(book)
+        #db.session.add(book)
         db.session.commit()
         flash('Book updated.')
+
     else :
         app.logger.error('Book id %s not found in DB' % book_id)
-        abort(500)   # Should not be able to make this request. Cancel and return 500 error code.
+        abort(500)   # Invalid request. Return 500 error code.
 
     return redirect(url_for('book_info', book_id=book_id))
 
