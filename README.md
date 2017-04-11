@@ -1,4 +1,4 @@
-###Basic Flask and SQLAlchemy app. Book reading wishlist.
+### Basic Flask and SQLAlchemy app. Book reading wishlist.
 
 Setup
 
